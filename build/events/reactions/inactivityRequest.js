@@ -9,7 +9,7 @@ export default new Event({
         if (reaction.me)
             return;
         if (reaction.message.embeds[0]?.title !== "New Inactivity Request")
-            return console.log("c");
+            return;
         const id = reaction.message.embeds[0].footer?.text;
         const has = await client.db.has(id);
         if (!has)
@@ -18,7 +18,6 @@ export default new Event({
         const emoji = reaction.emoji;
         if (emoji.name === "✅") {
             const reactions = reaction.count;
-            console.log(reactions);
             if (reactions < 2)
                 return;
             const mbr = reaction.message.guild?.members.cache.get(member);
