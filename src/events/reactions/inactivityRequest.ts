@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import Event from "../../Structures/Event.js";
 
 export default new Event({
@@ -6,16 +7,37 @@ export default new Event({
     if (reaction.partial) {
       reaction = await reaction.fetch();
     }
-    if (reaction.message.embeds[0]?.title !== "New Inactivity Request") return;
-    const reactions = reaction.message.reactions.cache.size;
-    console.log(reactions);
-    if (reactions === 3) {
-      const emoji = reaction.emoji;
-      if (emoji.name === "✅") {
-        await reaction.message.reply(`**Accepted** this request. Please DM the user.`);
-      } else if (emoji.name === "❌") {
-        await reaction.message.reply(`**Rejected** this request. Please DM the user.`);
+    if (reaction.me) return;
+    if (reaction.message.embeds[0]?.title !== "New Inactivity Request") return console.log("c");
+    const id = reaction.message.embeds[0].footer?.text;
+    const has = await client.db!.has(id as string);
+    if (!has)
+      return await reaction.message.reply("For some reason, this does not exist in my database.");
+    const member = (await client.db!.get(id as string)) as string;
+    const emoji = reaction.emoji;
+    if (emoji.name === "✅") {
+      const reactions = reaction.count;
+      console.log(reactions);
+      if (reactions < 2) return;
+      const mbr = reaction.message.guild?.members.cache.get(member);
+      let final = `**Accepted** this request by <@${member}>.`;
+      try {
+        await mbr?.roles.add("1088547147886100531");
+        final += " Gave user the role.";
+      } catch (err) {
+        client.logger.error(err);
       }
+      try {
+        await mbr?.send("Your inactivity request has been accepted.");
+        final += " DMed the user about it.";
+      } catch (err) {}
+      await reaction.message.reply(final);
+      return await client.db?.delete(id as string);
+    } else if (emoji.name === "❌") {
+      const reactions = reaction.count;
+      if (reactions < 2) return;
+      await reaction.message.reply(`**Rejected** this request. Please DM the user.`);
+      return await client.db?.delete(id as string);
     }
   },
 });
