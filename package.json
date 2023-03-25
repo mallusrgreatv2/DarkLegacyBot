@@ -1,0 +1,28 @@
+{
+	"name": "darklegacybot",
+	"version": "0.0.0",
+	"main": "src/index.js",
+	"repository": "https://github.com/mallusrgreatv2/DarkLegacyBot.git",
+	"author": "mallusrgreatv2 <69511006+mallusrgreatv2@users.noreply.github.com>",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"start": "rimraf ./build && yarn pretty && yarn build && yarn lint && node build/index.js",
+		"lint": "eslint src --ext .ts --fix",
+		"pretty": "prettier -w ./src"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.56.0",
+		"@typescript-eslint/parser": "^5.56.0",
+		"eslint": "^8.36.0",
+		"prettier": "^2.8.7",
+		"rimraf": "^4.4.1",
+		"typescript": "^5.0.2"
+	},
+	"type": "module",
+	"dependencies": {
+		"chalk": "^5.2.0",
+		"discord.js": "^14.8.0",
+		"dotenv": "^16.0.3"
+	}
+}
