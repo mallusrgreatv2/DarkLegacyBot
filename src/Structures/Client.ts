@@ -39,11 +39,11 @@ class Bot extends Discord.Client {
   db: QuickDB | null;
   async init() {
     const mysqlDriver = new MySQLDriver({
-      host: "db.darklegacymc.tk",
-      user: "u18_zQ2vEVRjaB",
-      password: "PycaYup!zn!1C40@wyR^GmgI",
-      database: "s18_dat",
-      port: 3306,
+      host: this.config.MYSQL_HOST,
+      user: this.config.MYSQL_USERNAME,
+      password: this.config.MYSQL_PASSWORD,
+      database: this.config.MYSQL_DB,
+      port: this.config.MYSQL_PORT,
       enableKeepAlive: true,
     });
     await mysqlDriver.connect();

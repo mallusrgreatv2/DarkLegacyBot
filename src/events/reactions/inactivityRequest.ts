@@ -10,14 +10,15 @@ export default new Event({
     if (reaction.me) return;
     if (reaction.message.embeds[0]?.title !== "New Inactivity Request") return;
     const id = reaction.message.embeds[0].footer?.text;
+    if (!id)
+      return await reaction.message.reply("Something went wrong. There is no ID in the footer.");
     const has = await client.db!.has(id as string);
-    if (!has)
-      return await reaction.message.reply("For some reason, this does not exist in my database.");
+    if (!has) return;
     const member = (await client.db!.get(id as string)) as string;
     const emoji = reaction.emoji;
     if (emoji.name === "✅") {
       const reactions = reaction.count;
-      if (reactions < 2) return;
+      if (reactions <= 2) return;
       const mbr = reaction.message.guild?.members.cache.get(member);
       let final = `**Accepted** this request by <@${member}>.`;
       try {
@@ -34,7 +35,7 @@ export default new Event({
       return await client.db?.delete(id as string);
     } else if (emoji.name === "❌") {
       const reactions = reaction.count;
-      if (reactions < 2) return;
+      if (reactions <= 2) return;
       await reaction.message.reply(`**Rejected** this request. Please DM the user.`);
       return await client.db?.delete(id as string);
     }
