@@ -41,6 +41,7 @@ class Bot extends Discord.Client {
             password: "PycaYup!zn!1C40@wyR^GmgI",
             database: "s18_dat",
             port: 3306,
+            enableKeepAlive: true,
         });
         await mysqlDriver.connect();
         this.db = new QuickDB({

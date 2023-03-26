@@ -6,11 +6,11 @@ import Client from "./Client.js";
 class Command implements ICommand {
   readonly name: string;
   readonly run: (client: Client, message: Message, args: string[]) => unknown;
-  readonly hideInHelp: boolean = false;
-  readonly devGuildOnly?: boolean = false;
+  readonly aliases: string[];
   constructor(cmdoptions: ICommand) {
     this.run = cmdoptions.run || [];
     this.name = cmdoptions.name;
+    this.aliases = cmdoptions.aliases || [];
     return this;
   }
 }

@@ -10,6 +10,7 @@ import Client from "../Structures/Client.js";
 
 interface Command {
   readonly name: string;
+  readonly aliases?: string[];
   readonly run: (client: Client, message: Message, args: string[] | []) => unknown;
 }
 

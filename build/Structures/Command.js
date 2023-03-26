@@ -1,11 +1,11 @@
 class Command {
     name;
     run;
-    hideInHelp = false;
-    devGuildOnly = false;
+    aliases;
     constructor(cmdoptions) {
         this.run = cmdoptions.run || [];
         this.name = cmdoptions.name;
+        this.aliases = cmdoptions.aliases || [];
         return this;
     }
 }

@@ -10,7 +10,7 @@ export default new Event({
             return;
         if (!message.content.startsWith(prefix))
             return;
-        const cmd = client.commands.get(command);
+        const cmd = client.commands.get(command) || client.commands.find(a => a.aliases?.includes(command));
         try {
             await cmd?.run(client, message, args);
         }

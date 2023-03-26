@@ -5,6 +5,7 @@ import { TextChannel } from "discord.js";
 export default new Command({
   name: "inactivityreq",
   run: async (client, message, args) => {
+    if (!message.member?.roles.cache.has("1087811708178940024")) return;
     const reason = args.join(" ");
     if (!reason) return await message.reply("You have to specify a reason!");
     const id = makeid(5);
@@ -19,6 +20,7 @@ export default new Command({
     });
     await msg.react("✅");
     await msg.react("❌");
+    await message.reply("Sent inactivity request.");
   },
 });
 function makeid(length) {
