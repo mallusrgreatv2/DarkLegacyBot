@@ -43,7 +43,9 @@ export default new Command({
           return;
         }
         info.type = typeMsg.content;
-        await typeMsg.reply(`Set type to \`${info.type}\`. Send changes.`);
+        await typeMsg.reply(
+          `Set type to \`${info.type}\`. Send changes.\nSend \`cancel\` to cancel.`
+        );
         const changesComponent = message.channel.createMessageCollector({
           filter: a => a.author.id === message.author.id,
           dispose: false,
@@ -64,14 +66,20 @@ export default new Command({
             ) as TextChannel;
             await channel.send({ embeds: [embed] });
             await changesMsg.reply("Sent!");
+            changesComponent.stop("Done");
           } else if (changesMsg.content.toLowerCase() === "done" && !info.changes.length) {
             changesComponent.stop("Cancelled");
             changesMsg.reply("Cancelled.");
             return;
+          } else if (changesMsg.content.toLowerCase() === "rmlast" && info.changes.length) {
+            const changelogRemoved = info.changes.pop();
+            await changesMsg.reply(
+              `Removed changelog:\n\`${changelogRemoved}\`\nSend \`cancel\` to cancel.\nSend \`done\` after done.`
+            );
           } else {
             info.changes.push(changesMsg.content);
             await changesMsg.reply(
-              "Added to the changelog. Reply `done` to send.\nReply `cancel` to cancel.\nReply with anything else to add to the changelog."
+              "Added to the changelog. Reply `done` to send.\nReply `cancel` to cancel.\nReply `rmlast` to remove the last changelog.\nReply with anything else to add to the changelog."
             );
           }
         });
