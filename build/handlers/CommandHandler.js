@@ -7,7 +7,8 @@ function CommandHandler(client) {
         for (const file of commands) {
             const command = await import(`../commands/${dir}/${file}`).then(imported => imported.default);
             client.commands.set(command.name, command);
-            console.log(chalk.blueBright `[HANDLER - SLASH] Loaded a file: ${dir}/${file} (#${client.commands.size})`);
+            console.log(`Dir:`, dir);
+            console.log(chalk.blueBright(`[HANDLER - SLASH] Loaded a file: ${dir}/${file} (#${client.commands.size})`));
         }
     });
 }

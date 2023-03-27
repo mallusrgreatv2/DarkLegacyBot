@@ -10,7 +10,7 @@ function EventHandler(client) {
             files.forEach(async (file) => {
                 const eventFile = await import(`../events/${dir}/${file}`).then(imported => imported.default);
                 const { event } = eventFile;
-                console.log(chalk.redBright `[HANDLER - EVENTS] Loaded a file: ${file}`);
+                console.log(chalk.redBright(`[HANDLER - EVENTS] Loaded a file: ${file}`));
                 try {
                     client.on(event, (...args) => eventFile.run(client, ...args));
                 }

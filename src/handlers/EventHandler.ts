@@ -16,7 +16,7 @@ function EventHandler(client: Client): void {
           imported => imported.default
         );
         const { event } = eventFile;
-        console.log(chalk.redBright`[HANDLER - EVENTS] Loaded a file: ${file}`);
+        console.log(chalk.redBright(`[HANDLER - EVENTS] Loaded a file: ${file}`));
 
         try {
           client.on(event, (...args: ClientEvents[typeof event]) => eventFile.run(client, ...args));

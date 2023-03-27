@@ -13,8 +13,11 @@ function CommandHandler(client: Client): void {
       );
 
       client.commands.set(command.name, command);
+      console.log(`Dir:`, dir);
       console.log(
-        chalk.blueBright`[HANDLER - SLASH] Loaded a file: ${dir}/${file} (#${client.commands.size})`
+        chalk.blueBright(
+          `[HANDLER - SLASH] Loaded a file: ${dir}/${file} (#${client.commands.size})`
+        )
       );
     }
   });
