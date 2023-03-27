@@ -3,7 +3,7 @@ import Command from "../../Structures/Command.js";
 export default new Command({
     name: "inactivityreq",
     run: async (client, message, args) => {
-        if (!message.member?.roles.cache.has("1087811708178940024"))
+        if (!message.member?.roles.cache.has(client.config.STAFF_ROLE))
             return;
         const reason = args.join(" ");
         if (!reason)
@@ -14,9 +14,9 @@ export default new Command({
             .setDescription(`**STAFF**: <@${message.author.id}>\n**REASON**: ${reason}`)
             .setFooter({ text: id });
         await client.db.set(id, message.author.id);
-        const msg = await client.channels.cache.get("1088547923027034172").send({
+        const msg = await client.channels.cache.get(client.config.INACTIVITY_REQUEST_CHANNEL).send({
             embeds: [embed],
-            content: "<@&1087811708178940024>",
+            content: `<@&${client.config.STAFF_ROLE}>`,
         });
         await msg.react("✅");
         await msg.react("❌");
