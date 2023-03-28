@@ -5,7 +5,7 @@ export default new Command({
   name: "changelog",
   aliases: ["clog"],
   run: async (client, message) => {
-    if (!message.member?.roles.cache.has(client.config.STAFF_ROLE)) return;
+    if (!message.member?.roles.cache.has(client.config.STAFF_ROLE.toString())) return;
     await message.reply("Gamemode? Reply to this message!\n Send `cancel` to cancel the process.");
     let info: {
       gamemode: string | undefined;
@@ -62,7 +62,7 @@ export default new Command({
               .setDescription(info.changes.join("\n"))
               .setTimestamp();
             const channel = changesMsg.guild?.channels.cache.get(
-              client.config.CHANGELOG_CHANNEL
+              client.config.CHANGELOG_CHANNEL.toString()
             ) as TextChannel;
             await channel.send({ embeds: [embed] });
             await changesMsg.reply("Sent!");

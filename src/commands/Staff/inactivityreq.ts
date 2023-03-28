@@ -5,7 +5,7 @@ import { TextChannel } from "discord.js";
 export default new Command({
   name: "inactivityreq",
   run: async (client, message, args) => {
-    if (!message.member?.roles.cache.has(client.config.STAFF_ROLE)) return;
+    if (!message.member?.roles.cache.has(client.config.STAFF_ROLE.toString())) return;
     const reason = args.join(" ");
     if (!reason) return await message.reply("You have to specify a reason!");
     const id = makeid(5);
@@ -15,7 +15,7 @@ export default new Command({
       .setFooter({ text: id });
     await client.db!.set(id, message.author.id);
     const msg = await (
-      client.channels.cache.get(client.config.INACTIVITY_REQUEST_CHANNEL) as TextChannel
+      client.channels.cache.get(client.config.INACTIVITY_REQUEST_CHANNEL.toString()) as TextChannel
     ).send({
       embeds: [embed],
       content: `<@&${client.config.STAFF_ROLE}>`,
